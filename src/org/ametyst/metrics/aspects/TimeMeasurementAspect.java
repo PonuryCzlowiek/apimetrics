@@ -11,7 +11,7 @@ public class TimeMeasurementAspect extends AspectPublishingEvents {
     @Pointcut("within(@EnableLogging *)")
     public void methodsInsideWatchedClasses() {}
 
-    @Pointcut("within(@org.springframework.scheduling.annotation.Scheduled *)")
+    @Pointcut("execution(@org.springframework.scheduling.annotation.Scheduled * *(..))")
     public void scheduledMethod() {}
 
     @Around("methodsInsideWatchedClasses()")
