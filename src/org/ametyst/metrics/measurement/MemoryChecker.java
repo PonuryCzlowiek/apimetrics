@@ -1,17 +1,20 @@
 package org.ametyst.metrics.measurement;
 
-import org.ametyst.metrics.aspects.EnableLogging;
+import org.ametyst.metrics.storage.Storage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@EnableLogging
 public class MemoryChecker {
+    @Autowired
+    private Storage storage;
+
     @Scheduled(cron = "*/5 * * * * *")
     public void checkMemoryState() {
-        String value = "Total - " + Runtime.getRuntime().totalMemory() + "" +
-                       "MAX - " + Runtime.getRuntime().maxMemory() + "" +
-                       "FREE - " + Runtime.getRuntime().freeMemory();
-        System.out.println(value);
+        MemoryMeasurement memoryMeasurement = new MemoryMeasurement(Runtime.getRuntime().totalMemory(),
+                                                                    Runtime.getRuntime().maxMemory(),
+                                                                    Runtime.getRuntime().freeMemory());
+        storage.store(MeasurementType.MEMORY, memoryMeasurement);
     }
 }

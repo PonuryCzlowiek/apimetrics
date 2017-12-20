@@ -1,21 +1,23 @@
 package org.ametyst.metrics.aspects;
 
+import org.ametyst.metrics.measurement.ClientMeasurement;
+import org.ametyst.metrics.measurement.ExecutionTimeMeasurement;
+import org.ametyst.metrics.measurement.MeasurementType;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Aspect
 @Component
 @RequiredTypes(value = {"org.springframework.stereotype.Controller",
         "org.springframework.web.bind.annotation.RequestMapping"})
-public class SpringControllerAnalysisAspect {
-
+public class SpringControllerAnalysisAspect extends AspectPublishingEvents {
     // any method within controller or its specialization
     @Pointcut("within(@(@org.springframework.stereotype.Controller *) *)")
     public void restControllers(){}
@@ -25,14 +27,14 @@ public class SpringControllerAnalysisAspect {
     public void methodsWithRequestMapping(){}
 
     @Around(value = "restControllers() && methodsWithRequestMapping()")
-    public Object measureControllerTime(ProceedingJoinPoint joinPoint) throws Throwable{
+    public Object measureControllerMethodExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable{
         long start = System.currentTimeMillis();
-
         Object proceed = joinPoint.proceed();
-
         long executionTime = System.currentTimeMillis() - start;
-
-        System.out.println(joinPoint.getSignature() + " executed in " + executionTime + "ms");
+        ExecutionTimeMeasurement executionTimeMeasurement = new ExecutionTimeMeasurement(joinPoint.getSignature().getDeclaringType().getName(),
+                                                                                         joinPoint.getSignature().getName(),
+                                                                                         executionTime);
+        publishEvent(MeasurementType.REQUEST, executionTimeMeasurement);
         return proceed;
     }
 
@@ -40,13 +42,13 @@ public class SpringControllerAnalysisAspect {
     public void logClients(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String requestUrl = request.getScheme() + "://" + request.getServerName()
-                            + ":" + request.getServerPort() + request.getContextPath() + request.getRequestURI()
-                            + "?" + request.getQueryString();
+                            + ":" + request.getServerPort() + request.getContextPath() + request.getRequestURI();
+        if (!StringUtils.isEmpty(request.getQueryString())) {
+            requestUrl += "?" + request.getQueryString();
+        }
 
-        String clientIp = request.getRemoteAddr();
-        String clientRequest;
-        clientRequest = request.getRemoteHost() + request.getRemoteAddr();
-        System.out.println("REQUEST " + requestUrl + " - " + clientIp + " - " + clientRequest);
+        ClientMeasurement clientMeasurement = new ClientMeasurement(request.getRemoteAddr(), requestUrl);
+        publishEvent(MeasurementType.REQUEST, clientMeasurement);
     }
 
     @After("methodsWithRequestMapping()")
@@ -66,10 +68,9 @@ public class SpringControllerAnalysisAspect {
         System.out.println(httpResponseStatus);
         }
 
-    @AfterThrowing(pointcut = "restControllers() && methodsWithRequestMapping()", throwing = "exception")
-    public void logExceptionsMoreData(JoinPoint joinPoint, Exception exception) {
-        System.out.println("Się rypło w " + joinPoint.getSignature() + " - " + exception.getMessage());
-        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-        System.out.println(response.getStatus());
-    }
+        // Not providing proper exception code for now
+//    @AfterThrowing(pointcut = "restControllers() && methodsWithRequestMapping()", throwing = "exception")
+//    public void logExceptionsMoreData(JoinPoint joinPoint, Exception exception) {
+//        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+//    }
 }
