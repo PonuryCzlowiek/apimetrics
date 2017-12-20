@@ -7,24 +7,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class Resource {
-    @GetMapping("resource")
+public class ExampleResource {
+    @GetMapping("resourceWithRequest")
     public String getResource(HttpServletRequest httpServletRequest) {
         return "ok";
     }
 
-    @GetMapping("resource2")
+    @GetMapping("resourceWithResponse")
     public String getResourceWithResponseDeclared(HttpServletResponse response) {
         return "ok";
     }
 
-    @GetMapping("throw")
+    @GetMapping("throwException")
     public String throwException() throws Exception {
-        throw new Exception("No chyba nie");
+        throw new Exception("");
     }
 
-    @GetMapping("throw2")
+    @GetMapping("throwExceptionWithResponse")
     public String throwExceptionWithMoreData(HttpServletResponse response) throws Exception {
-        throw new Exception("No chyba nie2");
+        throw new Exception("");
     }
 }

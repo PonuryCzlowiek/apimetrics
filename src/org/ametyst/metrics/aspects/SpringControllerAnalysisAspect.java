@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @RequiredTypes(value = {"org.springframework.stereotype.Controller",
         "org.springframework.web.bind.annotation.RequestMapping"})
-public class SpringControllerLogger {
+public class SpringControllerAnalysisAspect {
 
     // any method within controller or its specialization
     @Pointcut("within(@(@org.springframework.stereotype.Controller *) *)")
@@ -66,18 +66,10 @@ public class SpringControllerLogger {
         System.out.println(httpResponseStatus);
         }
 
-//    @AfterThrowing(pointcut = "restControllers() && methodsWithRequestMapping() && args(responseObj,..)", throwing = "exception")
     @AfterThrowing(pointcut = "restControllers() && methodsWithRequestMapping()", throwing = "exception")
     public void logExceptionsMoreData(JoinPoint joinPoint, Exception exception) {
         System.out.println("Się rypło w " + joinPoint.getSignature() + " - " + exception.getMessage());
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
         System.out.println(response.getStatus());
     }
-
-//    @After(value = "execution(* org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver+.*(..))")
-//@After(value = "within(org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver+)")
-//    @After(value = "within(org.springframework..*ExceptionResolver) && args(Exception,..)")
-//    public void a() {
-//        System.out.println("WO");
-//    }
 }

@@ -1,5 +1,6 @@
-package org.ametyst.metrics;
+package org.ametyst.metrics.measurement;
 
+import org.ametyst.metrics.aspects.EnableLogging;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
