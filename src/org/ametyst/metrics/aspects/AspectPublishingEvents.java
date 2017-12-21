@@ -9,7 +9,7 @@ public abstract class AspectPublishingEvents {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    protected void publishEvent(final MeasurementType measurementType, final Measurement message) {
+    void publishEvent(final MeasurementType measurementType, final Measurement message) {
         MeasurementEvent measurementEvent = new MeasurementEvent(this, measurementType, message);
         applicationEventPublisher.publishEvent(measurementEvent);
     }

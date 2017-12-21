@@ -48,7 +48,7 @@ public class SpringControllerAnalysisAspect extends AspectPublishingEvents {
         }
 
         ClientMeasurement clientMeasurement = new ClientMeasurement(request.getRemoteAddr(), requestUrl);
-        publishEvent(MeasurementType.REQUEST, clientMeasurement);
+        publishEvent(MeasurementType.CLIENT, clientMeasurement);
     }
 
     @After("methodsWithRequestMapping()")

@@ -1,5 +1,6 @@
 package org.ametyst.metrics;
 
+import org.ametyst.metrics.export.ToCsvExporter;
 import org.ametyst.metrics.measurement.Measurement;
 import org.ametyst.metrics.measurement.MeasurementType;
 import org.ametyst.metrics.storage.Storage;
@@ -16,6 +17,8 @@ import java.util.List;
 public class ExampleResource {
     @Autowired
     private Storage storage;
+    @Autowired
+    private ToCsvExporter toCsvExporter;
 
     @GetMapping("resourceWithRequest")
     public String getResource(HttpServletRequest httpServletRequest) {
@@ -40,5 +43,12 @@ public class ExampleResource {
     @GetMapping("measurements")
     public List<Measurement> getMeasurements(@RequestParam MeasurementType measurementType) {
         return storage.getMeasurements(measurementType);
+    }
+
+    @GetMapping("exportToCsv")
+    public String exportMeasurements(@RequestParam MeasurementType measurementType) {
+        List<Measurement> measurements = storage.getMeasurements(measurementType);
+        toCsvExporter.export(measurements);
+        return "ok";
     }
 }
