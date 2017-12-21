@@ -14,26 +14,17 @@ Be ready to answer questions about the implementation and your choice of metrics
 Technology used - Spring, Chart.js (D3?)
 
 Metrics:
-FULL REQUEST TIME:
+FULL PROCESSING TIME:
     SpringControllerAnalysisAspect.measureControllerMethodExecutionTime
 
-QUERY TIME/SEND TIME
-    ?    
-    
-RESPONSE SIZE
-    ?
-
 ENDPOINT
-source (mobile/web)
-Platform? System? Browser?
-IP source (country, client)
-    SpringControllerLogger.logClients    
-
-HTTP STATUS PER ENDPOINT
-    ?
+Source (mobile/web)
+System, Browser, Browser version
+IP source
+    SpringControllerAnalysisAspect.logRequestsPerClient    
 
 EXCEPTIONS
-    SpringControllerLogger.logExceptions
+    SpringControllerAnalysisAspect.logExceptions
     
 CPU/memory usage over time
     MemoryChecker.checkMemoryState

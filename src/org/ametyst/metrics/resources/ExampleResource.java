@@ -52,7 +52,7 @@ public class ExampleResource {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public AccessDeniedRestResponse handleException(Exception e) {
         return new AccessDeniedRestResponse("Access denied");
     }

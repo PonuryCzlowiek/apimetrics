@@ -1,5 +1,6 @@
 package org.ametyst.metrics.aspects;
 
+import eu.bitwalker.useragentutils.UserAgent;
 import org.ametyst.metrics.measurement.ClientMeasurement;
 import org.ametyst.metrics.measurement.ExceptionMeasurement;
 import org.ametyst.metrics.measurement.ExecutionTimeMeasurement;
@@ -8,7 +9,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -46,7 +46,14 @@ public class SpringControllerAnalysisAspect extends AspectPublishingEvents {
         String requestUrl = request.getScheme() + "://" + request.getServerName()
                             + ":" + request.getServerPort() + request.getContextPath() + request.getRequestURI();
 
-        ClientMeasurement clientMeasurement = new ClientMeasurement(request.getRemoteAddr(), requestUrl, Optional.ofNullable(request.getQueryString()).orElse(""));
+        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+        ClientMeasurement clientMeasurement = new ClientMeasurement(request.getRemoteAddr(),
+                                                                    requestUrl,
+                                                                    Optional.ofNullable(request.getQueryString()).orElse(""),
+                                                                    userAgent.getOperatingSystem().getName(),
+                                                                    userAgent.getOperatingSystem().getDeviceType().getName(),
+                                                                    userAgent.getBrowser().getName(),
+                                                                    userAgent.getBrowserVersion().getVersion());
         publishEvent(MeasurementType.CLIENT, clientMeasurement);
     }
 
