@@ -1,8 +1,10 @@
 package org.ametyst.metrics.measurement;
 
 public enum MeasurementType {
-    REQUEST,
     CLIENT,
+    EXCEPTION,
     MEMORY,
-    SCHEDULED
+    REQUEST,
+    SCHEDULED,
+    EXECUTION_TIME
 }

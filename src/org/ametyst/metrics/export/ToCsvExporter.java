@@ -42,7 +42,6 @@ public class ToCsvExporter {
             Method[] declaredMethods = me.getValue().get(0).getClass().getDeclaredMethods();
             List<Method> methods = Arrays.stream(declaredMethods).filter(method ->
                                                                                  (method.getName().startsWith("get") || method.getName().startsWith("is"))
-                                                                                 && !method.getName().startsWith("getClassName")
                                                                                  && method.getParameterCount() == 0
                                                                         ).collect(Collectors.toList());
             // Headers - field names are taken from getters

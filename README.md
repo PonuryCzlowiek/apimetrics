@@ -15,7 +15,7 @@ Technology used - Spring, Chart.js (D3?)
 
 Metrics:
 FULL REQUEST TIME:
-    SpringControllerLogger.measureControllerTime
+    SpringControllerAnalysisAspect.measureControllerMethodExecutionTime
 
 QUERY TIME/SEND TIME
     ?    
