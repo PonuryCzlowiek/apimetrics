@@ -1,6 +1,6 @@
 package org.ametyst.metrics.measurement;
 
-public class ClientMeasurement implements Measurement {
+public class ClientMeasurement extends Measurement {
     private String ip;
     private String url;
     private String queryParam;
@@ -9,7 +9,8 @@ public class ClientMeasurement implements Measurement {
     private String browser;
     private String browserVersion;
 
-    public ClientMeasurement(String ip, String url, String queryParam, String system, String device, String browser, String browserVersion) {
+    public ClientMeasurement(Long time, String ip, String url, String queryParam, String system, String device, String browser, String browserVersion) {
+        super(time);
         this.ip = ip;
         this.url = url;
         this.queryParam = queryParam;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -19,6 +20,6 @@ public class InMemoryStorage implements Storage {
 
     @Override
     public List<Measurement> getMeasurements(MeasurementType measurementType) {
-        return memory.get(measurementType);
+        return memory.getOrDefault(measurementType, new ArrayList<>());
     }
 }

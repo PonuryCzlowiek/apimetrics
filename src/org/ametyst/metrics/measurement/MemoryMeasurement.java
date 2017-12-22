@@ -1,11 +1,12 @@
 package org.ametyst.metrics.measurement;
 
-public class MemoryMeasurement implements Measurement {
+public class MemoryMeasurement extends Measurement {
     private Long total;
     private Long max;
     private Long free;
 
-    public MemoryMeasurement(Long total, Long max, Long free) {
+    public MemoryMeasurement(Long time, Long total, Long max, Long free) {
+        super(time);
         this.total = total;
         this.max = max;
         this.free = free;

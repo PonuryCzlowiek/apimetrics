@@ -19,7 +19,8 @@ public class TimeMeasurementAspect extends AspectPublishingEvents {
         long start = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
         long executionTime = System.currentTimeMillis() - start;
-        ExecutionTimeMeasurement executionTimeMeasurement = new ExecutionTimeMeasurement(joinPoint.getSignature().getDeclaringType().getName(),
+        ExecutionTimeMeasurement executionTimeMeasurement = new ExecutionTimeMeasurement(start,
+                                                                                         joinPoint.getSignature().getDeclaringType().getName(),
                                                                         joinPoint.getSignature().getName(),
                                                                         executionTime);
         publishEvent(MeasurementType.EXECUTION_TIME, executionTimeMeasurement);
@@ -31,7 +32,8 @@ public class TimeMeasurementAspect extends AspectPublishingEvents {
         long start = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
         long executionTime = System.currentTimeMillis() - start;
-        ExecutionTimeMeasurement executionTimeMeasurement = new ExecutionTimeMeasurement(joinPoint.getSignature().getDeclaringType().getName(),
+        ExecutionTimeMeasurement executionTimeMeasurement = new ExecutionTimeMeasurement(start,
+                                                                                         joinPoint.getSignature().getDeclaringType().getName(),
                                                                                          joinPoint.getSignature().getName(),
                                                                                          executionTime);
         publishEvent(MeasurementType.SCHEDULED, executionTimeMeasurement);

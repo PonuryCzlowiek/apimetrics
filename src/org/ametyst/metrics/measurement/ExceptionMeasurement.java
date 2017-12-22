@@ -1,11 +1,12 @@
 package org.ametyst.metrics.measurement;
 
-public class ExceptionMeasurement implements Measurement {
+public class ExceptionMeasurement extends Measurement {
     private String className;
     private String methodName;
     private String responseType;
 
-    public ExceptionMeasurement(String className, String methodName, String responseType) {
+    public ExceptionMeasurement(Long time, String className, String methodName, String responseType) {
+        super(time);
         this.className = className;
         this.methodName = methodName;
         this.responseType = responseType;

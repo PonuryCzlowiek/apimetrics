@@ -39,8 +39,14 @@ public class ToCsvExporter {
         try (FileWriter file = new FileWriter(me.getKey().getTypeName() + ".csv");
             CSVPrinter csvPrinter = new CSVPrinter(file, CSVFormat.DEFAULT)) {
             // Reflections are used here so we do not care about the class as long as it follows java bean convention of getters
-            Method[] declaredMethods = me.getValue().get(0).getClass().getDeclaredMethods();
-            List<Method> methods = Arrays.stream(declaredMethods).filter(method ->
+            List<Method> declaredMethods = new ArrayList<>();
+            Class c = me.getKey();
+            do {
+                declaredMethods.addAll(Arrays.asList(c.getDeclaredMethods()));
+                c = c.getSuperclass();
+
+            } while (c != Object.class && c != null);
+            List<Method> methods = (declaredMethods).stream().filter(method ->
                                                                                  (method.getName().startsWith("get") || method.getName().startsWith("is"))
                                                                                  && method.getParameterCount() == 0
                                                                         ).collect(Collectors.toList());
