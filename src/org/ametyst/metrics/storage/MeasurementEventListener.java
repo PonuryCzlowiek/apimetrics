@@ -1,6 +1,6 @@
 package org.ametyst.metrics.storage;
 
-import org.ametyst.metrics.aspects.MeasurementEvent;
+import org.ametyst.metrics.aspect.MeasurementEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;

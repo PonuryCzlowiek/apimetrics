@@ -5,6 +5,7 @@ import org.ametyst.metrics.measurement.Measurement;
 import org.ametyst.metrics.measurement.MeasurementType;
 import org.ametyst.metrics.storage.Storage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,11 +16,12 @@ import java.util.Map;
 @RestController
 public class ClientResource {
     @Autowired
+    @Qualifier("InMemoryStorage")
     private Storage storage;
 
     @GetMapping("clients")
-    public Map<String, Map<String, Integer>> a() {
-        List<Measurement> measurements = storage.getMeasurements(MeasurementType.CLIENT);
+    public Map<String, Map<String, Integer>> getClients() {
+        List<Measurement> measurements = storage.getDetailedMeasurementsList(MeasurementType.CLIENT);
         Map<String, Map<String, Integer>> fieldValueCounterMap = new HashMap<>();
         fieldValueCounterMap.put("ip", new HashMap<>());
         fieldValueCounterMap.put("url", new HashMap<>());

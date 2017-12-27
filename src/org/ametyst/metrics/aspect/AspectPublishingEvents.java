@@ -1,4 +1,4 @@
-package org.ametyst.metrics.aspects;
+package org.ametyst.metrics.aspect;
 
 import org.ametyst.metrics.measurement.Measurement;
 import org.ametyst.metrics.measurement.MeasurementType;

@@ -6,6 +6,7 @@ import org.ametyst.metrics.measurement.MeasurementType;
 import java.util.List;
 
 public interface Storage {
-    void store(MeasurementType measurementType, Measurement o);
-    List<Measurement> getMeasurements(MeasurementType measurementType);
+    void store(MeasurementType measurementType, Measurement measurement);
+    List<Measurement> getDetailedMeasurementsList(MeasurementType measurementType);
+    List<Measurement> getAllMeasurementsList(String dateTimeKey);
 }

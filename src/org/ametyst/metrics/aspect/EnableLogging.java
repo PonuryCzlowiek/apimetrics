@@ -1,4 +1,4 @@
-package org.ametyst.metrics.aspects;
+package org.ametyst.metrics.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

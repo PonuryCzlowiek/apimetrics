@@ -1,4 +1,4 @@
-package org.ametyst.metrics.aspects;
+package org.ametyst.metrics.aspect;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import org.ametyst.metrics.measurement.ClientMeasurement;
