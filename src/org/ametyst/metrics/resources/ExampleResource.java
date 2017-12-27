@@ -10,7 +10,6 @@ import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -24,23 +23,13 @@ public class ExampleResource {
     @Autowired
     private ToCsvExporter toCsvExporter;
 
-    @GetMapping("resourceWithRequest")
-    public String getResource(HttpServletRequest httpServletRequest) {
-        return "ok";
-    }
-
-    @GetMapping("resourceWithResponse")
-    public String getResourceWithResponseDeclared(HttpServletResponse response) {
-        return "ok";
-    }
-
     @GetMapping("throwException")
     public String throwException() throws Exception {
         throw new Exception("");
     }
 
     @GetMapping("throwSpecificException")
-    public String throwExceptionWithMoreData(HttpServletResponse response) throws Exception {
+    public String throwExceptionWithMoreData() throws Exception {
         if (new Random().nextBoolean()) {
             throw new AccessException("");
         } else {
