@@ -10,11 +10,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * This memory is long-term
- */
 @Component
-public class DiskPersister {
+public class DiskPersistComponent {
     @Autowired
     private ToCsvExporter toCsvExporter;
     @Autowired
@@ -31,9 +28,9 @@ public class DiskPersister {
     private void persist(String dateTimeKey, List<Measurement> measurements) {
         Map<Class<? extends Measurement>, List<Measurement>> measurementsByClass = new HashMap<>();
         measurements.forEach(m -> measurementsByClass.computeIfAbsent(m.getClass(), me -> new ArrayList<>()).add(m));
-        measurementsByClass.entrySet().forEach(a -> {
+        measurementsByClass.forEach((key, value) -> {
             try {
-                toCsvExporter.exportSingleMeasurementType(dateTimeKey, a.getKey(), a.getValue());
+                toCsvExporter.exportSingleMeasurementType(dateTimeKey, key, value);
             } catch (IOException e) {
                 e.printStackTrace();
             }

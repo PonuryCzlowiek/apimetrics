@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class DateUtil {
+    private DateUtil() {}
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
 
@@ -16,6 +17,10 @@ public class DateUtil {
 
     public static String getNow() {
        return LocalDateTime.now().format(DATE_TIME_FORMATTER);
+    }
+
+    public static String parse(LocalDateTime localDateTime) {
+        return localDateTime.format(DATE_TIME_FORMATTER);
     }
 
     public static String parse(Long milliseconds) {

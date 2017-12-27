@@ -32,8 +32,8 @@ var config = {
     }
 };
 
-function getData(measurementType) {
-    $.get("/measurements?measurementType=MEMORY", function (data) {
+function getData() {
+    $.get("/memoryUsage", function (data) {
         resetChart(data);
     })
 }

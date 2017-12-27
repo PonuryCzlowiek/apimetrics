@@ -18,18 +18,18 @@ var config = {
     }
 };
 
-function getData(field) {
+function getData() {
     $.get("/clients", function (data) {
-        resetChart(data, field);
+        resetChart(data);
     })
 }
 
-function resetChart(data, field) {
+function resetChart(data) {
     var labels = [];
     var values = [];
-    for (var value in data[field]) {
+    for (var value in data) {
         labels.push(value);
-        values.push(data[field][value])
+        values.push(data[value])
     }
     config.data.datasets[0].data = values;
     config.data.labels = labels;
