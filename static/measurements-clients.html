@@ -8,27 +8,15 @@
     <script src="measurements-clients.js"></script>
     <link href="chart.js.css" rel="stylesheet" type="text/css">
     <body>
-        <div id="canvas-holder" style="width:70%">
-            <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
-                 class="chartjs-size-monitor">
-                <div class="chartjs-size-monitor-expand"
-                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink"
-                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-                </div>
-            </div>
-            <canvas id="memory-chart-area" style="display: block; width: 1400px; height: 666px;" width="1400" height="666"
-                    class="chartjs-render-monitor" googl="true">
+        <div>
+            <canvas id="clients-chart-area">
             </canvas>
         </div>
-        <button onclick="getData('ip')">Get IP</button>
-        <button onclick="getData('url')">Get URL</button>
-        <button onclick="getData('queryParam')">Get Query params</button>
-        <button onclick="getData('system')">Get System</button>
-        <button onclick="getData('device')">Get device</button>
-        <button onclick="getData('browser')">Get browser</button>
+        <button class="btn btn-info" onclick="getData('ip')">Get IP</button>
+        <button class="btn btn-info" onclick="getData('url')">Get URL</button>
+        <button class="btn btn-info" onclick="getData('queryParam')">Get Query params</button>
+        <button class="btn btn-info" onclick="getData('system')">Get System</button>
+        <button class="btn btn-info" onclick="getData('device')">Get device</button>
+        <button class="btn btn-info" onclick="getData('browser')">Get browser</button>
     </body>
 </html>

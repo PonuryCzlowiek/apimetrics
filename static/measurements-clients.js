@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var ctx = document.getElementById("memory-chart-area").getContext("2d");
+    var ctx = document.getElementById("clients-chart-area").getContext("2d");
     window.memoryBarChart = new Chart(ctx, config);
     getData();
 });
@@ -18,18 +18,18 @@ var config = {
     }
 };
 
-function getData() {
+function getData(field) {
     $.get("/clients", function (data) {
-        resetChart(data);
+        resetChart(data, field);
     })
 }
 
-function resetChart(data) {
+function resetChart(data, field) {
     var labels = [];
     var values = [];
-    for (var value in data) {
+    for (var value in data[field]) {
         labels.push(value);
-        values.push(data[value])
+        values.push(data[field][value])
     }
     config.data.datasets[0].data = values;
     config.data.labels = labels;

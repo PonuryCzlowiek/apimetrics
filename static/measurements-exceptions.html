@@ -7,23 +7,11 @@
     <script src="jquery-3.2.1.js"></script>
     <script src="measurements-exceptions.js"></script>
     <link href="chart.js.css" rel="stylesheet" type="text/css">
-<body>
-<div id="canvas-holder" style="width:70%">
-    <div style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
-         class="chartjs-size-monitor">
-        <div class="chartjs-size-monitor-expand"
-             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+    <body>
+        <div>
+            <canvas id="exceptions-chart-area">
+            </canvas>
         </div>
-        <div class="chartjs-size-monitor-shrink"
-             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
-            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-        </div>
-    </div>
-    <canvas id="exceptions-chart-area" style="display: block; width: 1400px; height: 666px;" width="1400" height="666"
-            class="chartjs-render-monitor" googl="true">
-    </canvas>
-</div>
-<button id="refresh" onclick="getData()">Refresh</button>
-</body>
+        <button class="btn btn-info" id="refresh" onclick="getData()">Refresh</button>
+    </body>
 </html>

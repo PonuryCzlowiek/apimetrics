@@ -3,14 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="jquery-3.2.1.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("ul.nav-tabs li").each(function () {
+                $(this).on("click", function () {
+                    console.log("WAT");
+                    $(".content").load($(this).attr("data-page") + ".html");
+                });
+            });
+        });
+    </script>
 </head>
-<body>
-    <span>Simple measurements page. Click links below to check some of them:</span>
-    <br/><br/>
-    <a href="measurements-clients.html">Clients</a>
-    <br/>
-    <a href="measurements-memory.html">Memory</a>
-    <br/>
-    <a href="measurements-exceptions.html">Exceptions</a>
-</body>
+    <body>
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs nav-justified">
+                        <li data-page="measurements-clients"><a href="#">Clients</a></li>
+                        <li class="nav-item" data-page="measurements-memory"><a href="#">Memory</a></li>
+                        <li class="nav-item" data-page="measurements-exceptions"><a href="#">Exceptions</a></li>
+                    </ul>
+                </div>
+                <div class="panel-body text-center content">This is a sample page</div>
+            </div>
+        </div>
+    </body>
 </html>

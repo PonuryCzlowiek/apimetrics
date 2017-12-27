@@ -7,6 +7,14 @@ $(document).ready(function() {
 var config = {
     type: 'line',
     options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    stepSize: 1
+                }
+            }]
+        },
         responsive: true
     }
 };
