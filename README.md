@@ -49,3 +49,8 @@ This is a proof of concept, so some sample endpoints are available:
   
 Application serializes all of the gathered data every minute in the main application's directory, divided by measurement. Data is serialized to CSV file, with each file representing one minute of usage.
 For now application holds all of the measured data in the memory, but it is possible to clean it out periodically or narrow down the direct data availability.  
+
+Examples of available charts below:
+![Example 1](example1.png)
+
+![Example 2](example2.png)
