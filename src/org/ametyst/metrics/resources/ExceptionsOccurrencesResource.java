@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,10 +26,10 @@ public class ExceptionsOccurrencesResource {
     private Storage storage;
 
     @GetMapping("exceptionsOccurrences")
-    public Map<String, Map<String, Integer>> getExceptionsOccurrences() {
+    public Map<Long, Map<String, Integer>> getExceptionsOccurrences() {
         List<Measurement> detailedMeasurementsList = storage.getDetailedMeasurementsList(MeasurementType.EXCEPTION);
         LocalDateTime now = LocalDateTime.now();
-        Map<String, Map<String, Integer>> exceptionsPerMinute = new LinkedHashMap<>();
+        Map<String, Map<String, Integer>> exceptionsPerMinuteGrouped = new LinkedHashMap<>();
         List<String> exceptionTypes = detailedMeasurementsList.stream()
                                                               .map(m -> ((ExceptionMeasurement) m).getResponseType())
                                                               .distinct()
@@ -39,17 +40,23 @@ public class ExceptionsOccurrencesResource {
             // values - 60 entries per type
             Map<String, Integer> occurrencesPerException = new HashMap<>();
             exceptionTypes.forEach(exceptionType -> occurrencesPerException.put(exceptionType, 0));
-            exceptionsPerMinute.put(DateUtil.parse(current), occurrencesPerException);
+            exceptionsPerMinuteGrouped.put(DateUtil.format(current), occurrencesPerException);
         }
         if (exceptionTypes.isEmpty()) {
             return new HashMap<>();
         }
         detailedMeasurementsList.forEach(measurement -> {
-            String parse = DateUtil.parse(measurement.getTime());
-            exceptionsPerMinute.get(parse)
+            String parse = DateUtil.format(measurement.getTime());
+            exceptionsPerMinuteGrouped.get(parse)
                                .compute(((ExceptionMeasurement)measurement).getResponseType(), (a, b) -> b == null ? 1 : b+1);
         });
-
+        Map<Long, Map<String, Integer>> exceptionsPerMinute = new LinkedHashMap<>();
+        exceptionsPerMinuteGrouped.entrySet()
+                                  .stream()
+                                  .forEach(a -> {
+                                      long l = DateUtil.DATE_TIME_FORMATTER.parse(a.getKey(), LocalDateTime::from).atZone(ZoneId.systemDefault()).toEpochSecond() * 1000;
+                                      exceptionsPerMinute.put(l, a.getValue());
+                                  });
         return exceptionsPerMinute;
     }
 }

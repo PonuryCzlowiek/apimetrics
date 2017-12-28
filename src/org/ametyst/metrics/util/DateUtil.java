@@ -16,14 +16,14 @@ public class DateUtil {
     }
 
     public static String getNow() {
-       return LocalDateTime.now().format(DATE_TIME_FORMATTER);
+        return LocalDateTime.now().format(DATE_TIME_FORMATTER);
     }
 
-    public static String parse(LocalDateTime localDateTime) {
+    public static String format(LocalDateTime localDateTime) {
         return localDateTime.format(DATE_TIME_FORMATTER);
     }
 
-    public static String parse(Long milliseconds) {
+    public static String format(Long milliseconds) {
         return Instant.ofEpochMilli(milliseconds).atZone(ZoneId.systemDefault()).format(DATE_TIME_FORMATTER);
     }
 }

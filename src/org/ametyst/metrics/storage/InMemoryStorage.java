@@ -22,7 +22,7 @@ public class InMemoryStorage implements Storage {
 
     @Override
     public synchronized void store(MeasurementType measurementType, Measurement measurement) {
-        String now = DateUtil.parse(measurement.getTime());
+        String now = DateUtil.format(measurement.getTime());
         memory.compute(now, (key, multiValueMap) -> {
             MultiValueMap<MeasurementType, Measurement> tempMultiValueMap = multiValueMap;
             if (tempMultiValueMap == null) {

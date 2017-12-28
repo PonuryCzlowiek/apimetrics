@@ -50,6 +50,7 @@ function resetChart(data) {
         newDataSets.push(dataSet);
     }
     config.data.datasets = newDataSets;
-    config.data.labels = labels;
+    // *1 to change from String to number
+    config.data.labels = labels.map(function(v) {return new Date(v*1).toUTCString()});
     window.memoryBarChart.update();
 }

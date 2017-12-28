@@ -42,6 +42,6 @@ function resetChart(data) {
     config.data.datasets[0].data = data.map(function(x) { return x.total / 1024 / 1024 });
     config.data.datasets[1].data = data.map(function(x) { return x.max / 1024 / 1024 });
     config.data.datasets[2].data = data.map(function(x) { return x.free / 1024 / 1024 });
-    config.data.labels = data.map(function(x) { return new Date(x.time*1000).toUTCString()});
+    config.data.labels = data.map(function(x) { return new Date(x.time).toUTCString()});
     window.memoryBarChart.update();
 }
